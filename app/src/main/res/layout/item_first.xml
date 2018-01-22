@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="120dp"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+
+    <TextView
+        android:id="@+id/first_text"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="@color/hui_9"
+        android:gravity="center"
+        android:text="一级栏目10"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</LinearLayout>

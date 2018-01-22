@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hui_9">
+
+
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@null" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/name_layout"
+        android:layout_alignTop="@id/name_layout"
+        android:layout_toLeftOf="@id/name_layout"
+        android:text="用户名："
+        android:textColor="@color/white" />
+
+
+    <LinearLayout
+        android:id="@+id/pwd_layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/name_layout"
+        android:layout_below="@id/name_tv"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@null" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/pwd_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pwd_layout"
+        android:layout_alignRight="@id/name_tv"
+        android:layout_alignTop="@id/pwd_layout"
+        android:text="密   码："
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/name_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="信息展示平台"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pwd_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:text="登录"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>
