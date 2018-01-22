@@ -1,6 +1,7 @@
 package com.lzw.tvdemo;
 
 import android.app.ProgressDialog;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,9 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.lzw.tvdemo.fragment.house.HouseFragment;
@@ -26,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView1, recyclerView2;
+    private RecyclerView recyclerView1;
 
     private SecondAdapter secondAdapter;
 
@@ -42,13 +47,19 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog dialog;
 
-    private ListView listView1, listView2;
+    private ListView listView1, listView2, listViewSecond;
 
     private ListAdapter1 listAdapter1;
 
     private ListAdapter2 listAdapter2;
 
     private View maskView;
+
+    private ImageView typeImg, loginImg;
+
+    private PopupWindow popupWindowType, popupWindowLogin;
+
+    private View popViewType, popViewLogin;
 
 
     @Override
@@ -60,15 +71,18 @@ public class MainActivity extends AppCompatActivity {
         showDialog();
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
-        recyclerView2 = findViewById(R.id.recycler_view_second);
+        listViewSecond = findViewById(R.id.list_view_second);
         recyclerView1 = findViewById(R.id.recycler_view_first);
         listView1 = findViewById(R.id.list_view_1);
         listView2 = findViewById(R.id.list_view_2);
         viewPager = findViewById(R.id.view_pager);
         maskView = findViewById(R.id.maskView);
-        secondAdapter = new SecondAdapter();
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView2.setAdapter(secondAdapter);
+        typeImg = findViewById(R.id.type_img);
+        loginImg = findViewById(R.id.login_img);
+        secondAdapter = new SecondAdapter(this);
+        listViewSecond.setAdapter(secondAdapter);
+        View view = LayoutInflater.from(this).inflate(R.layout.foot_second_layout, null);
+        listViewSecond.addFooterView(view);
 
         firstAdapter = new FirstAdapter();
         recyclerView1.setAdapter(firstAdapter);
@@ -120,10 +134,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.setOffscreenPageLimit(1);
 
-        secondAdapter.setSecondClick(new SecondAdapter.SecondClick() {
+        listViewSecond.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void itemClick(int pos, String data) {
-                Toast.makeText(MainActivity.this, data + pos, Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 listAdapter1.addRefresh(MainActivity.this.data);
                 listView1.setVisibility(View.VISIBLE);
                 maskView.setVisibility(View.VISIBLE);
@@ -144,11 +157,32 @@ public class MainActivity extends AppCompatActivity {
                 maskView.setVisibility(View.GONE);
             }
         });
+
+        popViewType = LayoutInflater.from(this).inflate(R.layout.type_pop_view, null);
+        popViewLogin = LayoutInflater.from(this).inflate(R.layout.login_pop_view, null);
+        popupWindowType = new PopupWindow(popViewType, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindowType.setOutsideTouchable(true);
+        popupWindowType.setBackgroundDrawable(new BitmapDrawable());
+        typeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindowType.showAsDropDown(typeImg);
+            }
+        });
+        popupWindowLogin = new PopupWindow(popViewLogin, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindowLogin.setOutsideTouchable(true);
+        popupWindowLogin.setBackgroundDrawable(new BitmapDrawable());
+        loginImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindowLogin.showAsDropDown(loginImg);
+            }
+        });
     }
 
     private List<String> getData2(String data) {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             list.add(data);
         }
         return list;

@@ -19,11 +19,13 @@
             android:orientation="vertical"
             android:paddingTop="15dp">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_second"
+            <ListView
+                android:id="@+id/list_view_second"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:divider="@null" />
         </LinearLayout>
 
         <RelativeLayout
@@ -54,11 +56,13 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/type_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_launcher" />
 
                 <ImageView
+                    android:id="@+id/login_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

@@ -1,9 +1,11 @@
 package com.lzw.tvdemo;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lzw.tvdemo.base.BaseListAdapter;
 import com.lzw.tvdemo.base.BaseRecyclerAdapter;
 
 /**
@@ -12,35 +14,28 @@ import com.lzw.tvdemo.base.BaseRecyclerAdapter;
  * @desc:
  */
 
-public class SecondAdapter extends BaseRecyclerAdapter<String, SecondAdapter.MyViewHolder> {
-    private SecondClick secondClick;
-
-    public void setSecondClick(SecondClick secondClick) {
-        this.secondClick = secondClick;
+public class SecondAdapter extends BaseListAdapter<String, SecondAdapter.MyViewHolder> {
+    public SecondAdapter(Context context) {
+        super(context);
     }
 
+
     @Override
-    protected int getItemLayout() {
+    protected int getLayout() {
         return R.layout.item_second;
     }
 
     @Override
-    protected MyViewHolder onCreateItemViewHolder(View view) {
+    protected MyViewHolder onCreateViewHolder(View view) {
         return new MyViewHolder(view);
     }
 
     @Override
-    protected void onBindItemViewHolder(MyViewHolder holder, final String data, final int position) {
-        holder.textView.setText(data);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                secondClick.itemClick(position, data);
-            }
-        });
+    protected void onBindData(MyViewHolder viewHolder, String data, int position) {
+        viewHolder.textView.setText(data);
     }
 
-    protected class MyViewHolder extends RecyclerView.ViewHolder {
+    protected class MyViewHolder extends BaseListAdapter.ViewHolder {
 
         TextView textView;
 
@@ -48,9 +43,5 @@ public class SecondAdapter extends BaseRecyclerAdapter<String, SecondAdapter.MyV
             super(itemView);
             textView = itemView.findViewById(R.id.second_text);
         }
-    }
-
-    public interface SecondClick {
-        void itemClick(int pos, String data);
     }
 }
