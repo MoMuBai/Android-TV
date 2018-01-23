@@ -23,7 +23,7 @@
                 android:id="@+id/list_view_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
                 android:divider="@null" />
         </LinearLayout>

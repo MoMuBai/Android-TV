@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("加载中");
         showDialog();
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-
         listViewSecond = findViewById(R.id.list_view_second);
         recyclerView1 = findViewById(R.id.recycler_view_first);
         listView1 = findViewById(R.id.list_view_1);
