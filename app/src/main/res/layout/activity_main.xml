@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/hui_9" />
 
-            <com.lzw.tvdemo.view.NoScrollViewPager
+            <com.lzw.tv.view.NoScrollViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
