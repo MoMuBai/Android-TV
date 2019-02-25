@@ -1,4 +1,4 @@
-package com.lzw.tvdemo.test;
+package com.lzw.tvdemo.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,12 +1,11 @@
-package com.lzw.tvdemo;
+package com.lzw.tvdemo.main;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lzw.tvdemo.R;
 import com.lzw.tvdemo.base.BaseListAdapter;
-import com.lzw.tvdemo.base.BaseRecyclerAdapter;
 
 /**
  * @author: lzw

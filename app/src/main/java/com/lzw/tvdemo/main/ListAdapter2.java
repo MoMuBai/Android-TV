@@ -1,8 +1,9 @@
-package com.lzw.tvdemo;
+package com.lzw.tvdemo.main;
 
 import android.content.Context;
 import android.view.View;
 
+import com.lzw.tvdemo.R;
 import com.lzw.tvdemo.base.BaseListAdapter;
 
 /**

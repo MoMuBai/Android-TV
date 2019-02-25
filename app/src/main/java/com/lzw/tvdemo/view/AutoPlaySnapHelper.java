@@ -1,4 +1,4 @@
-package com.lzw.tvdemo.test;
+package com.lzw.tvdemo.view;
 
 import android.os.Handler;
 import android.os.Looper;

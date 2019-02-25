@@ -1,4 +1,4 @@
-package com.lzw.tvdemo;
+package com.lzw.tvdemo.main;
 
 import android.app.ProgressDialog;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,11 +19,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.lzw.tvdemo.R;
 import com.lzw.tvdemo.fragment.house.HouseFragment;
 import com.lzw.tvdemo.fragment.image.ImageFragment;
 import com.lzw.tvdemo.fragment.video.VideoFragment;
 import com.lzw.tvdemo.fragment.webview.WebViewFragment;
-import com.lzw.tvdemo.test.ScaleLayoutManager;
+import com.lzw.tvdemo.view.ScaleLayoutManager;
 import com.lzw.tvdemo.view.NoScrollViewPager;
 
 import java.util.ArrayList;

@@ -10,15 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.lzw.tvdemo.FirstAdapter;
+import com.lzw.tvdemo.main.FirstAdapter;
 import com.lzw.tvdemo.R;
 import com.lzw.tvdemo.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.LogRecord;
 
 /**
  * @author: lzw

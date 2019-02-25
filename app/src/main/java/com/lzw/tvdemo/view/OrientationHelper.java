@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzw.tvdemo.test;
+package com.lzw.tvdemo.view;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

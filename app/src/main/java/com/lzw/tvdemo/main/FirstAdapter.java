@@ -1,15 +1,12 @@
-package com.lzw.tvdemo;
+package com.lzw.tvdemo.main;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lzw.tvdemo.R;
 import com.lzw.tvdemo.base.BaseRecyclerAdapter;
-
-import org.w3c.dom.Text;
 
 /**
  * @author: lzw

@@ -1,58 +1,57 @@
-package com.lzw.tvdemo.test;
+package com.lzw.tvdemo.view;
 
 import android.content.Context;
 import android.view.View;
 
 /**
  * An implementation of {@link ViewPagerLayoutManager}
- * which rotates items
+ * which layouts items like carousel
  */
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class RotateLayoutManager extends ViewPagerLayoutManager {
+public class CarouselLayoutManager extends ViewPagerLayoutManager {
 
     private int itemSpace;
-    private float angle;
+    private float minScale;
     private float moveSpeed;
-    private boolean reverseRotate;
 
-    public RotateLayoutManager(Context context, int itemSpace) {
+    public CarouselLayoutManager(Context context, int itemSpace) {
         this(new Builder(context, itemSpace));
     }
 
-    public RotateLayoutManager(Context context, int itemSpace, int orientation) {
+    public CarouselLayoutManager(Context context, int itemSpace, int orientation) {
         this(new Builder(context, itemSpace).setOrientation(orientation));
     }
 
-    public RotateLayoutManager(Context context, int itemSpace, int orientation, boolean reverseLayout) {
+    public CarouselLayoutManager(Context context, int itemSpace, int orientation, boolean reverseLayout) {
         this(new Builder(context, itemSpace).setOrientation(orientation).setReverseLayout(reverseLayout));
     }
 
-    public RotateLayoutManager(Builder builder) {
-        this(builder.context, builder.itemSpace, builder.angle, builder.orientation, builder.moveSpeed,
-                builder.reverseRotate, builder.maxVisibleItemCount, builder.distanceToBottom,
+    public CarouselLayoutManager(Builder builder) {
+        this(builder.context, builder.itemSpace, builder.minScale, builder.orientation,
+                builder.maxVisibleItemCount, builder.moveSpeed, builder.distanceToBottom,
                 builder.shrinkSpace, builder.reverseLayout);
     }
 
-    private RotateLayoutManager(Context context, int itemSpace, float angle, int orientation, float moveSpeed,
-                                boolean reverseRotate, int maxVisibleItemCount, int distanceToBottom,
-                                int shrinkSpace, boolean reverseLayout) {
+    private CarouselLayoutManager(Context context, int itemSpace, float minScale, int orientation,
+                                  int maxVisibleItemCount, float moveSpeed, int distanceToBottom,
+                                  int shrinkSpace, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
+        setEnableBringCenterToFront(true);
         setShrinkSpace(shrinkSpace);
         setDistanceToBottom(distanceToBottom);
         setMaxVisibleItemCount(maxVisibleItemCount);
         this.itemSpace = itemSpace;
-        this.angle = angle;
+        this.minScale = minScale;
         this.moveSpeed = moveSpeed;
-        this.reverseRotate = reverseRotate;
     }
 
     public int getItemSpace() {
         return itemSpace;
     }
 
-    public float getAngle() {
-        return angle;
+    public float getMinScale() {
+        return minScale;
     }
 
     public int getOrientation() {
@@ -63,10 +62,6 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
         return moveSpeed;
     }
 
-    public boolean getReverseRotate() {
-        return reverseRotate;
-    }
-
     public void setItemSpace(int itemSpace) {
         assertNotInLayoutOrScroll(null);
         if (this.itemSpace == itemSpace) return;
@@ -74,10 +69,11 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
         removeAllViews();
     }
 
-    public void setAngle(float centerScale) {
+    public void setMinScale(float minScale) {
         assertNotInLayoutOrScroll(null);
-        if (this.angle == centerScale) return;
-        this.angle = centerScale;
+        if (minScale > 1f) minScale = 1f;
+        if (this.minScale == minScale) return;
+        this.minScale = minScale;
         requestLayout();
     }
 
@@ -91,21 +87,16 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
         this.moveSpeed = moveSpeed;
     }
 
-    public void setReverseRotate(boolean reverseRotate) {
-        assertNotInLayoutOrScroll(null);
-        if (this.reverseRotate == reverseRotate) return;
-        this.reverseRotate = reverseRotate;
-        requestLayout();
-    }
-
     @Override
     protected float setInterval() {
-        return mDecoratedMeasurement + itemSpace;
+        return (mDecoratedMeasurement - itemSpace);
     }
 
     @Override
     protected void setItemViewProperty(View itemView, float targetOffset) {
-        itemView.setRotation(calRotation(targetOffset));
+        float scale = calculateScale(targetOffset + mSpaceMain);
+        itemView.setScaleX(scale);
+        itemView.setScaleY(scale);
     }
 
     @Override
@@ -114,36 +105,39 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
         return 1 / moveSpeed;
     }
 
-    private float calRotation(float targetOffset) {
-        final float realAngle = reverseRotate ? angle : -angle;
-        return realAngle / mInterval * targetOffset;
+    @Override
+    protected float setViewElevation(View itemView, float targetOffset) {
+        return itemView.getScaleX() * 5;
+    }
+
+    private float calculateScale(float x) {
+        float deltaX = Math.abs(x - (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2f);
+        return (minScale - 1) * deltaX / (mOrientationHelper.getTotalSpace() / 2f) + 1f;
     }
 
     public static class Builder {
-        private static float INTERVAL_ANGLE = 360f;
         private static final float DEFAULT_SPEED = 1f;
+        private static final float MIN_SCALE = 0.5f;
 
+        private Context context;
         private int itemSpace;
         private int orientation;
-        private float angle;
+        private float minScale;
         private float moveSpeed;
-        private boolean reverseRotate;
-        private boolean reverseLayout;
-        private Context context;
         private int maxVisibleItemCount;
+        private boolean reverseLayout;
         private int shrinkSpace;
         private int distanceToBottom;
 
         public Builder(Context context, int itemSpace) {
-            this.context = context;
             this.itemSpace = itemSpace;
+            this.context = context;
             orientation = HORIZONTAL;
-            angle = INTERVAL_ANGLE;
+            minScale = MIN_SCALE;
             this.moveSpeed = DEFAULT_SPEED;
-            reverseRotate = false;
             reverseLayout = false;
-            distanceToBottom = ViewPagerLayoutManager.INVALID_SIZE;
             maxVisibleItemCount = ViewPagerLayoutManager.DETERMINE_BY_MAX_AND_MIN;
+            distanceToBottom = ViewPagerLayoutManager.INVALID_SIZE;
         }
 
         public Builder setOrientation(int orientation) {
@@ -151,8 +145,8 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
             return this;
         }
 
-        public Builder setAngle(float angle) {
-            this.angle = angle;
+        public Builder setMinScale(float minScale) {
+            this.minScale = minScale;
             return this;
         }
 
@@ -163,11 +157,6 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
 
         public Builder setMoveSpeed(float moveSpeed) {
             this.moveSpeed = moveSpeed;
-            return this;
-        }
-
-        public Builder setReverseRotate(boolean reverseRotate) {
-            this.reverseRotate = reverseRotate;
             return this;
         }
 
@@ -186,8 +175,8 @@ public class RotateLayoutManager extends ViewPagerLayoutManager {
             return this;
         }
 
-        public RotateLayoutManager build() {
-            return new RotateLayoutManager(this);
+        public CarouselLayoutManager build() {
+            return new CarouselLayoutManager(this);
         }
     }
 }
